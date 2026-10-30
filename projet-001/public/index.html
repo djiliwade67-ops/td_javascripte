@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Entrer votre url pour générer un qr code</h1>
+
+    <input placeholder="https://..." type="url" name="lien" id="url">
+    <button type="submit" id="genereqr">Générer</button>
+    <div id="qr"></div>
+
+    <script>
+        //1. récupérer les 3 éléments de la page (input, bouton, div)
+        const input = document.getElementById("url");
+        const button = document.getElementById("genereqr");
+        const div = document.getElementById("qr");
+
+        button.addEventListener("click", async function () {
+            const lien = input.value;
+            const reponse = await fetch(`/api/qr?lien=${encodeURIComponent(lien)}`);
+            const data = await reponse.json();
+            div.innerHTML = `<img src="${data.qr}" alt="QR Code">`;
+        });
+
+
+    </script>
+</body>
+
+</html>
